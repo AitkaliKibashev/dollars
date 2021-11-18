@@ -43,7 +43,7 @@ const Post = ({id, username, text, image, published_date, addRatingToPost, authU
                 <p className="post-author">{username}, <span>{publishedDate.toLocaleString()}</span></p>
                 <div className="post-header__right-side">
                     <NavLink to={`post/${id}`} style={{textDecoration: 'none', marginRight: "10px"}}>
-                        <p className="common-p">Открыть комментарии</p>
+                        <p className="common-p">Комментарии</p>
                     </NavLink>
                     {user === authUser.id && <DeleteBtn clickHandler={() => deletePost(id)} />}
                 </div>

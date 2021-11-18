@@ -15,6 +15,7 @@
 
 }
 
+
 .post {
     position: relative;
     margin-bottom: 30px;
@@ -38,6 +39,37 @@
     font-weight: bold;
 }
 
+@media(max-width: 768px) {
+    .about-us {
+        margin-top: 40px;
+        font-size: 20px;
+    }
+
+    .posts-container  {
+        padding: 20px 15px;
+    }
+
+    .post {
+        margin-bottom: 20px;
+    }
+
+    .post-header {
+        margin-bottom: 15px;
+    }
+
+    .post-author {
+        font-size: 16px;
+    }
+
+}
+
+@media(max-width: 480px) {
+    .posts-container  {
+        padding: 20px 0;
+    }
+}
+
+
 .common-p {
     color: white;
 }
@@ -49,6 +81,23 @@
 
 .post-body {
     margin-bottom: 20px;
+}
+
+@media(max-width: 768px) {
+    .post-author span {
+        font-size: 14px;
+    }
+
+    .post-body {
+        margin-bottom: 10px;
+    }
+}
+
+@media(max-width: 480px) {
+    .post-author span {
+        display: block;
+        font-size: 12px;
+    }
 }
 
 .post-img {
@@ -101,6 +150,18 @@
     transition: all 0.2s linear;
 }
 
+@media(max-width: 480px) {
+    .rate-post,
+    .post-rating {
+        width: 30px;
+        height: 30px;
+    }
+    .rate-post p,
+    .post-rating p{
+        font-size: 12px;
+    }
+}
+
 .green {
     background: #70bb55;
 }
@@ -138,11 +199,29 @@
     background: #faefef;
 }
 
+
 .icon-wrapper {
     width: 30px;
     height: 30px;
 
     border-radius: 50%;
+}
+
+@media(max-width: 480px) {
+    .create-post {
+        margin-bottom: 20px;
+    }
+
+    .send-btn,
+    .add-img-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-wrapper {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .icon-wrapper img {
@@ -178,7 +257,19 @@
 .post-container {
     padding: 50px 50px;
     margin: 0 auto;
-    width: 900px;
+    max-width: 900px;
+}
+
+@media(max-width: 768px) {
+    .post-container  {
+        padding: 30px 15px;
+    }
+}
+
+@media(max-width: 480px) {
+    .post-container  {
+        padding: 20px 0;
+    }
 }
 
 .comments-title {

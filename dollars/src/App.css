@@ -80,6 +80,23 @@ body {
   width: 90%;
 }
 
+@media(max-width: 768px) {
+    .common-textarea {
+      width: 75%;
+    }
+
+    .common-textarea.wide {
+      width: 85%;
+    }
+}
+
+@media(max-width: 480px) {
+  .common-textarea {
+    font-size: 14px;
+    width: 70%;
+  }
+}
+
 .delete-post-btn {
   display: inline-block;
   cursor: pointer;

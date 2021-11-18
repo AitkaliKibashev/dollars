@@ -33,7 +33,7 @@ const Header = ({isAuth, user, fetchUserReputation}) => {
                     </NavLink>
                 </li>
                 <li className="nav-link" >
-                    {isAuth ? `Hello, ${user.username}`:
+                    {isAuth ? user.username:
                         <NavLink to='/login'>
                             Login
                         </NavLink>}
