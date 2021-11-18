@@ -1,0 +1,89 @@
+.main {
+    width: 100%;
+    min-height: 100vh;
+
+    background: black;
+}
+
+.welcome h1 {
+    margin-top: 30px;
+
+    font-weight: normal;
+    font-size: 16px;
+    color: white;
+}
+
+.chat-title {
+    margin-top: 40px;
+    text-align: center;
+    color: white;
+}
+.main-board {
+    margin: 10px auto;
+    max-width: 1000px;
+    height: 400px;
+    padding: 20px 50px;
+    color: white;
+
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    background: #181818;
+    overflow-y: scroll;
+}
+
+.board-subject {
+    margin-top: 5px;
+    padding: 10px;
+
+    background-color: #4D4D4D;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+
+}
+
+.board-header span {
+    font-size: 12px;
+}
+
+.board-body {
+    margin-top: 10px;
+    padding: 0 40px;
+    font-size: 14px;
+}
+
+.message-form {
+    margin: 0 auto;
+    width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.message-form input {
+    margin-right: 50px;
+    width: 80%;
+    min-height: 50px;
+    padding: 1em 1em;
+
+    font-size: 16px;
+
+    color: inherit;
+    background: #4D4D4D;
+    border: 2px solid white;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+}
+
+.message-form button {
+    font-size: 18px;
+    padding: 10px 50px;
+    color: inherit;
+    font-family: inherit;
+
+    background: #4D4D4D;
+    border: 2px solid white;
+    border-radius: 10px;
+    outline: none;
+}

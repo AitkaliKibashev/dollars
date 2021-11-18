@@ -1,0 +1,96 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.common-input {
+  margin: 10px 0 20px 0;
+  width: 250px;
+  padding: 10px 15px;
+  font-size: 16px;
+
+  outline: none;
+  border-radius: 50px;
+
+}
+
+.common-btn {
+  margin-top: 30px;
+  align-self: center;
+  padding: 8px 70px;
+
+  font-size: 18px;
+
+  background: gray;
+  border: 2px solid white;
+  border-radius: 50px;
+  color: white;
+
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+
+.common-btn:hover {
+  background: white;
+  color: gray;
+}
+
+.error-p {
+  color: #ea3636;
+}
+
+.error-message {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #ea3636;
+}
+
+.common-textarea {
+  padding: 10px;
+  width: 85%;
+  min-height: 67px;
+  max-height: 200px;
+
+  font-size: 16px;
+
+  outline: none;
+  color: white;
+  font-family: inherit;
+  border-radius: 8px;
+  border: none;
+  background: #4d4d4d;
+  resize: vertical;
+}
+
+.common-textarea.wide {
+  width: 90%;
+}
+
+.delete-post-btn {
+  display: inline-block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+}
+
+.delete-post-btn img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
