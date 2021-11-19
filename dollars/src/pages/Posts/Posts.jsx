@@ -14,6 +14,8 @@ import {
 } from "../../redux/reducers/postsReducer"
 import Post from "./Post"
 import {addReputation} from "../../redux/reducers/authReducer"
+import Loader
+    from "../../components/Loader/Loader"
 
 const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, isAuth}) => {
     const [value, setValue] = useState('')
@@ -115,6 +117,7 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
 
                         </>)}
                     {!isLoading && <div className="posts-end" ref={postsEndRef} />}
+                    {isLoading && <Loader />}
                 </div>
                 {error && <div className="error_container">{error}</div>}
             </div>

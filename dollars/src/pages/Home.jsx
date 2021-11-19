@@ -12,6 +12,7 @@ import {
     setMessage,
 } from "../redux/reducers/messagesReducer"
 import {chatAPI} from "../API/API"
+import Loader from "../components/Loader/Loader"
 
 const Home = ({messages, setMessage, isAuth, user, initializeMessages}) => {
 

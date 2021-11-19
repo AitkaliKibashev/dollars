@@ -12,8 +12,10 @@ import {
     fetchComments
 } from "../../redux/reducers/commentReducer"
 import sendPng from "../../assets/images/send.png"
+import Loader
+    from "../../components/Loader/Loader"
 
-const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearComments, error, addComment, isAuth}) => {
+const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearComments, error, addComment, isAuth, isPostsLoading, isCommentsLoading}) => {
     const location = useLocation()
     const [value, setValue] = useState('')
     const postId = location.pathname.split('/')[2]
@@ -65,7 +67,8 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
             <div className="container">
                 <Header />
                 <div className="post-container">
-                    <Post {...post} authUser={user}/>
+                    {isPostsLoading ? <Loader /> : <Post {...post} authUser={user}/>}
+
                     <h2 className="comments-title">Комментарии</h2>
                     {toReplyData && <p>Ответ {toReplyData.username}</p>}
                     {isAuth &&
@@ -80,7 +83,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
                         </label>
                     </form>
                     }
-
+                    {isCommentsLoading && <Loader />}
                     {comments?.map(c => {
                         if(c.parent) {
                             return <Comment
@@ -104,6 +107,8 @@ const mapStateToProps = (state) =>({
     comments: state.comments.comments,
     error: state.posts.error,
     isAuth: state.auth.isAuth,
+    isPostsLoading: state.posts.isLoading,
+    isCommentsLoading: state.comments.isLoading
 })
 
 
