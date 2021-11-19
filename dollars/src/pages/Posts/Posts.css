@@ -179,7 +179,7 @@
 }
 
 .create-post {
-    width: 100%;
+    max-width: 100%;
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
@@ -232,6 +232,7 @@
 
 .file-input,
 .submit-input {
+    width: 10px;
     position: absolute;
     visibility: hidden;
     opacity: 0;
@@ -241,13 +242,15 @@
     margin-bottom: 10px;
 }
 
-.error_container {
+.error_wrapper {
     width: 100%;
+
     position: fixed;
     left: 0;
+    right: 0;
     bottom: 0;
     font-size: 18px;
-    padding: 15px 10px;
+    padding: 15px 0;
     text-align: center;
 
     color: #ea3636;
@@ -286,4 +289,8 @@
 .post-header__right-side {
     display: flex;
     align-items: center;
+}
+
+.posts-end {
+    max-width: 100%;
 }

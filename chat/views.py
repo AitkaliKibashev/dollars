@@ -124,8 +124,11 @@ class GetPostsAPIView(APIView):
             return Response({"error": "Превышен лимит страниц"})
         page_objects = paginator.get_page(page_num)
         serializer = PostSerializer(page_objects, many=True)
-
-        return Response(serializer.data)
+        temp_data = {
+            "posts": serializer.data,
+            "pages": paginator.num_pages
+        }
+        return Response(temp_data)
 
 
 class AddPostAPIView(APIView):

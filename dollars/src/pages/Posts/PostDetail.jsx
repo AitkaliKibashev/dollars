@@ -94,7 +94,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
                         }
 
                     })}
-                    {error && <div className="error_container">{error}</div>}
+                    {error && <div className="error_wrapper">{error}</div>}
                 </div>
             </div>
         </div>

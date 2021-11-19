@@ -17,7 +17,7 @@ import {addReputation} from "../../redux/reducers/authReducer"
 import Loader
     from "../../components/Loader/Loader"
 
-const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, isAuth}) => {
+const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, isAuth, pagesNumber}) => {
     const [value, setValue] = useState('')
     const [img, setImg] = useState(null)
     const [page, setPage] = useState(1)
@@ -36,7 +36,7 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
         if(isLoading) return
         if(observer.current) observer.current.disconnect()
         const callback = (entries) => {
-            if(entries[0].isIntersecting) {
+            if(entries[0].isIntersecting && page < pagesNumber) {
                 setPage(page + 1)
             }
         }
@@ -112,14 +112,12 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
                     </form>
                     }
                     {posts.map(p =>
-                        <>
                             <Post {...p} authUser={user} />
-
-                        </>)}
+                    )}
                     {!isLoading && <div className="posts-end" ref={postsEndRef} />}
                     {isLoading && <Loader />}
                 </div>
-                {error && <div className="error_container">{error}</div>}
+                {error && <div className={"error_wrapper"}>{error}</div>}
             </div>
         </main>
     )
@@ -131,6 +129,7 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     isLoading: state.posts.isLoading,
     isAuth: state.auth.isAuth,
+    pagesNumber: state.posts.pagesNumber,
 })
 
 

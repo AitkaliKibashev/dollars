@@ -8,6 +8,7 @@ const SET_POSTS_ERROR = 'SET_POSTS_ERROR'
 const SET_IS_POSTS_LOADING = 'SET_IS_POSTS_LOADING'
 const DELETE_POST = 'DELETE_POST'
 const SET_POST = 'SET_POST'
+const SET_PAGES_NUMBER = 'SET_PAGES_NUMBER'
 
 const initialState = {
     posts: [
@@ -17,7 +18,8 @@ const initialState = {
 
     },
     error: null,
-    isLoading: false
+    isLoading: false,
+    pagesNumber: 1,
 }
 
 export const postsReducer = (state=initialState, action) => {
@@ -62,6 +64,11 @@ export const postsReducer = (state=initialState, action) => {
                 ...state,
                 post: {...action.payload}
             }
+        case SET_PAGES_NUMBER:
+            return {
+                ...state,
+                pagesNumber: action.pages
+            }
         default:
             return state
     }
@@ -76,6 +83,7 @@ const setIsLoadingAC = (bool) => ({type: SET_IS_POSTS_LOADING, bool})
 const clearPostsAC = () => ({type: CLEAR_POSTS})
 const deletePostAC = (postId) => ({type: DELETE_POST, postId})
 const setPostAC = (payload) => ({type: SET_POST, payload})
+const setPageNumberAC = (pages) => ({type: SET_PAGES_NUMBER, pages})
 
 export const setPosts = (page) => async (dispatch) => {
     try {
@@ -84,17 +92,19 @@ export const setPosts = (page) => async (dispatch) => {
 
         const posts = []
         if(!res.data.error) {
-            for(let i=0; i < res.data.length; i++) {
-                const postRatings = await postAPI.getPostRatings(res.data[i].id)
+            for(let i=0; i < res.data.posts.length; i++) {
+                const postRatings = await postAPI.getPostRatings(res.data.posts[i].id)
                 if(postRatings.data) {
-                    posts.push({...res.data[i], ratings: [...postRatings.data]})
+                    posts.push({...res.data.posts[i], ratings: [...postRatings.data]})
                 }
             }
-
+            dispatch(setPageNumberAC(res.data.pages))
             dispatch(setPostsAC(posts))
             dispatch(setErrorAC(null))
-            dispatch(setIsLoadingAC(false))
         }
+
+        dispatch(setIsLoadingAC(false))
+
     } catch (e) {
         setErrorAC('Произшола ошибка')
         setTimeout(() => {
@@ -115,8 +125,8 @@ export const fetchPost = (postId) => async (dispatch) => {
 
             dispatch(setPostAC(post))
             dispatch(setErrorAC(null))
-            dispatch(setIsLoadingAC(false))
         }
+        dispatch(setIsLoadingAC(false))
     } catch (e) {
         setErrorAC('Произшола ошибка')
         setTimeout(() => {
