@@ -47,3 +47,12 @@
 .reply-btn:hover {
     text-decoration: underline;
 }
+
+.comment-children {
+    margin-top: 10px;
+    margin-left: 30px;
+    padding: 10px;
+
+    border-radius: 8px;
+    border: 2px solid #ffffff;
+}

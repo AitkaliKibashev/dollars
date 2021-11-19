@@ -5,12 +5,11 @@ import DeleteBtn
 import {connect} from "react-redux"
 import {deleteComment} from "../../redux/reducers/commentReducer"
 
-const Comment = ({id, user, text, created_date, parentComment, authUser, deleteComment, setToReplyData}) => {
+const Comment = ({id, user, text, created_date, authUser, deleteComment, setToReplyData, children}) => {
     const createdDate = new Date(created_date)
 
     return (
         <div className='comment-wrapper'>
-
             <div className="comment-header">
                 <p className="comment-author">
                     {user.username} <span>{createdDate.toLocaleString()}</span>
@@ -18,12 +17,28 @@ const Comment = ({id, user, text, created_date, parentComment, authUser, deleteC
                 {authUser.id === user.id && <DeleteBtn clickHandler={() => deleteComment(id)} />}
             </div>
             <div className="comment-body">
-                {parentComment && <span>>>> {parentComment.user.username}</span>}
                 {text}
             </div>
             <div className="comment_footer">
                 {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, username: user.username})}>Ответить</button>}
             </div>
+
+            {children?.map(child =>
+            <div className='comment-children'>
+                <div className="comment-header">
+                    <p className="comment-author">
+                        {child.user.username} <span>{new Date(child.created_date).toLocaleString()}</span>
+                    </p>
+                    {authUser.id === child.user.id && <DeleteBtn clickHandler={() => deleteComment(child.id)} />}
+                </div>
+                <div className="comment-body">
+                    {child.text}
+                </div>
+                <div className="comment_footer">
+                    {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, username: child.user.username})}>Ответить</button>}
+                </div>
+            </div>
+            )}
         </div>
     )
 }

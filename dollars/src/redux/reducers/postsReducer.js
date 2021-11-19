@@ -1,4 +1,4 @@
-import {postAPI} from "../../API/API"
+import {commentsAPI, postAPI} from "../../API/API"
 
 const SET_POSTS = 'SET_POSTS'
 const CLEAR_POSTS = 'CLEAR_POSTS'
@@ -94,8 +94,10 @@ export const setPosts = (page) => async (dispatch) => {
         if(!res.data.error) {
             for(let i=0; i < res.data.posts.length; i++) {
                 const postRatings = await postAPI.getPostRatings(res.data.posts[i].id)
+                const postComments = await commentsAPI.fetchPostComments(res.data.posts[i].id)
+
                 if(postRatings.data) {
-                    posts.push({...res.data.posts[i], ratings: [...postRatings.data]})
+                    posts.push({...res.data.posts[i], ratings: [...postRatings.data], commentsLength: postComments.data.length},)
                 }
             }
             dispatch(setPageNumberAC(res.data.pages))

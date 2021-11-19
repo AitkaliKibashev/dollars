@@ -9,7 +9,7 @@ import DeleteBtn
     from "../../components/common/DeleteBtn"
 import {NavLink} from "react-router-dom"
 
-const Post = ({id, username, text, image, published_date, addRatingToPost, authUser, user, ratings, addReputation, deletePost}) => {
+const Post = ({id, username, text, image, published_date, addRatingToPost, authUser, user, ratings, addReputation, deletePost, commentsLength}) => {
 
 
     const ratePost = (rate) => {
@@ -42,9 +42,11 @@ const Post = ({id, username, text, image, published_date, addRatingToPost, authU
             <div className="post-header">
                 <p className="post-author">{username}, <span>{publishedDate.toLocaleString()}</span></p>
                 <div className="post-header__right-side">
+                    {commentsLength !== undefined &&
                     <NavLink to={`post/${id}`} style={{textDecoration: 'none', marginRight: "10px"}}>
-                        <p className="common-p">Комментарии</p>
-                    </NavLink>
+                        <p className="common-p">{'Комментарии (' + commentsLength + ')'}</p>
+                    </NavLink>}
+
                     {user === authUser.id && <DeleteBtn clickHandler={() => deletePost(id)} />}
                 </div>
 

@@ -20,6 +20,10 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
     const [value, setValue] = useState('')
     const postId = location.pathname.split('/')[2]
     const [toReplyData, setToReplyData] = useState(null)
+    const primaryComments = comments.filter(c => !c.parent)
+    const newComments = primaryComments.map(nc => {
+        return {...nc, children: comments.filter(c => c.parent === nc.id)}
+    })
 
     useEffect(() => {
         fetchPost(postId)
@@ -29,6 +33,12 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
             clearComments()
         }
     }, [])
+
+    useEffect(() => {
+        if(toReplyData) {
+            setValue(`${toReplyData.username}, `)
+        }
+    }, [toReplyData])
 
     const handleTextarea = (e) => {
         e.target.style.height = e.target.scrollHeight + 'px'
@@ -70,7 +80,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
                     {isPostsLoading ? <Loader /> : <Post {...post} authUser={user}/>}
 
                     <h2 className="comments-title">Комментарии</h2>
-                    {toReplyData && <p>Ответ {toReplyData.username}</p>}
+                    {toReplyData && <p style={{marginBottom: '10px'}}>Ответ {toReplyData.username}</p>}
                     {isAuth &&
                     <form className="comment-form" onSubmit={(e) => submitComment(e)}>
                         <textarea
@@ -84,16 +94,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
                     </form>
                     }
                     {isCommentsLoading && <Loader />}
-                    {comments?.map(c => {
-                        if(c.parent) {
-                            return <Comment
-                                key={c.id} {...c} parentComment={comments.find(p => p.id === c.parent)} setToReplyData={setToReplyData}/>
-                        } else {
-                            return <Comment
-                                key={c.id} {...c} setToReplyData={setToReplyData}/>
-                        }
-
-                    })}
+                    {newComments?.map(c => <Comment key={c.id} {...c} setToReplyData={setToReplyData}/>)}
                     {error && <div className="error_wrapper">{error}</div>}
                 </div>
             </div>
