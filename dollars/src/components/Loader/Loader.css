@@ -1,0 +1,12 @@
+.loader-wrapper {
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+}
+
+.loader-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
