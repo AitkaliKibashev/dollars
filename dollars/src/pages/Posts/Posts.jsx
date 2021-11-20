@@ -27,13 +27,17 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
     const [value, setValue] = useState('')
     const [img, setImg] = useState(null)
     const [page, setPage] = useState(1)
-    const [categoryId, setCategoryId] = useState(categories[0].id)
+    const [categoryId, setCategoryId] = useState(null)
     const postsEndRef = useRef(null)
     const observer = useRef(null)
 
     useEffect(() => {
         fetchCategories()
     }, [])
+
+    useEffect(() => {
+        if(!categoryId) setCategoryId(categories[0]?.id)
+    }, [categories])
 
     useEffect(() => {
         setPosts(page, categoryId)
