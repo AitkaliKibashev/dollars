@@ -51,8 +51,8 @@ export const userAPI = {
 }
 
 export const postAPI = {
-    getPosts: (page) => {
-        return axios.get(`${url}/post/${page}`)
+    getPosts: (page, category) => {
+        return axios.get(`${url}/post/?page=${page}&category=${category}`)
     },
     addPost: (data, token) => {
         return axios.post(`${url}/post/`, data, {
@@ -102,4 +102,30 @@ export const commentsAPI = {
             }
         })
     },
+}
+
+export const categoryAPI = {
+    fetchCategories: () => {
+        return axios.get(`${url}/categories/`)
+    }
+}
+
+export const notificationAPI = {
+    fetchNotifications: (userId) => {
+        return axios.get(`${url}/notification/?user_id=${userId}`)
+    },
+    sendNotification: (data, token) => {
+        return axios.post(`${url}/notification/`, data, {
+            headers: {
+                'Authorization': `token ${token}`
+            }
+        })
+    },
+    updateNotification: (data, notificationId, token) => {
+        return axios.patch(`${url}/notification/?notification_id=${notificationId}`, data, {
+            headers: {
+                'Authorization': `token ${token}`
+            }
+        })
+    }
 }

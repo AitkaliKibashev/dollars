@@ -11,12 +11,20 @@ class Message(models.Model):
         return self.username.capitalize()
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.title
+
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=150)
     text = models.TextField(max_length=2000)
     image = models.ImageField(upload_to='posts/', blank=True)
     published_date = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
@@ -32,7 +40,6 @@ class Reputation(models.Model):
         return str(self.value)
 
 
-
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.SmallIntegerField()
@@ -40,7 +47,6 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'{self.rating}'
-
 
 
 class Comment(models.Model):
@@ -52,3 +58,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='notification', blank=True, null=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='notification', blank=True, null=True)
+    message = models.CharField(max_length=200)
+    watched = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.message

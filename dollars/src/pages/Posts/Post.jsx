@@ -3,27 +3,39 @@ import {addReputation} from "../../redux/reducers/authReducer"
 import {connect} from "react-redux"
 import {
     addRatingToPost,
-    deletePost
+    deletePost, setError
 } from "../../redux/reducers/postsReducer"
 import DeleteBtn
     from "../../components/common/DeleteBtn"
 import {NavLink} from "react-router-dom"
+import RatePost from "./RatePost"
+import {sendNotification} from "../../redux/reducers/notificationReducer"
 
-const Post = ({id, username, text, image, published_date, addRatingToPost, authUser, user, ratings, addReputation, deletePost, commentsLength}) => {
+const Post = ({post, addRatingToPost, authUser, addReputation, deletePost, sendNotification, setError}) => {
+    const {id, username, text, image, published_date, ratings, user, commentsLength} = post
 
 
     const ratePost = (rate) => {
-        addRatingToPost({
-            post: id,
-            user: authUser.id,
-            rating: rate
-        })
-        addReputation({
-            username: authUser.username,
-            user: user,
-            value: rate,
-            post: id
-        })
+        if(user === authUser.id) {
+            setError('Вы мне можете поставить рейтинг на свой же пост!')
+        } else {
+            addRatingToPost({
+                post: id,
+                user: authUser.id,
+                rating: rate
+            })
+            addReputation({
+                username: authUser.username,
+                user: user,
+                value: rate,
+                post: id
+            })
+            sendNotification({
+                user: user,
+                post: id,
+                message: `${authUser.username} поставил на ваш пост +${rate}`
+            })
+        }
     }
 
 
@@ -65,15 +77,9 @@ const Post = ({id, username, text, image, published_date, addRatingToPost, authU
                 <div className={checkRatingLevel(ratingSum)}>
                     <p>{ratingSum}</p>
                 </div>
-                <div className="rate-post red" onClick={() => ratePost(1)}>
-                    <p>+1</p>
-                </div>
-                <div className="rate-post orange" onClick={() => ratePost(5)}>
-                    <p>+5</p>
-                </div>
-                <div className="rate-post green" onClick={() => ratePost(10)}>
-                    <p>+10</p>
-                </div>
+                <RatePost rate={1} color={'red'} onClick={ratePost}/>
+                <RatePost rate={5} color={'orange'} onClick={ratePost}/>
+                <RatePost rate={10} color={'green'} onClick={ratePost}/>
             </div>
         </div>
     )
@@ -82,4 +88,4 @@ const mapStateToProps = (state) =>({
 
 })
 
-export default connect(mapStateToProps, {addReputation, addRatingToPost, deletePost})(Post)
+export default connect(mapStateToProps, {addReputation, addRatingToPost, deletePost, sendNotification, setError})(Post)

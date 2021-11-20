@@ -10,8 +10,7 @@ urlpatterns = [
     path('messages/', MessagesAPIView.as_view(), name='messages-view'),
     path('user-reputation/', ReputationAPIView.as_view(), name='reputation-view'),
     path('get-user-reputation/<str:user_id>', GetReputationAPIView.as_view(), name='get-reputation-view'),
-    path('post/<str:page>', GetPostsAPIView.as_view(), name='post-view'),
-    path('post/', AddPostAPIView.as_view(), name='post-view'),
+    path('post/', PostsAPIView.as_view(), name='post-view'),
     path('post-rating/<str:post_id>', RatingAPIView.as_view(), name='rating-view'),
     path('post-rate/', RateAPIView.as_view(), name='rate-view'),
     path('post-detail/<str:pk>', PostDetail.as_view(), name='post-detail'),
@@ -19,4 +18,6 @@ urlpatterns = [
     path('user/<str:pk>', UsersAPIView.as_view(), name='user-view'),
     path('add-comment/', PostComment.as_view(), name='add-comment-view'),
     path('delete-comment/<str:pk>', DeleteComment.as_view(), name='delete-comment-view'),
+    path('categories/', CategoryAPIView.as_view(), name='categories-view'),
+    path('notification/', UserNotification.as_view(), name='notification-view'),
 ]

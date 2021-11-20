@@ -14,8 +14,9 @@ import {
 import sendPng from "../../assets/images/send.png"
 import Loader
     from "../../components/Loader/Loader"
+import {sendNotification} from "../../redux/reducers/notificationReducer"
 
-const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearComments, error, addComment, isAuth, isPostsLoading, isCommentsLoading}) => {
+const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearComments, error, addComment, isAuth, isPostsLoading, isCommentsLoading, sendNotification}) => {
     const location = useLocation()
     const [value, setValue] = useState('')
     const postId = location.pathname.split('/')[2]
@@ -36,7 +37,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
 
     useEffect(() => {
         if(toReplyData) {
-            setValue(`${toReplyData.username}, `)
+            setValue(`${toReplyData.user.username}, `)
         }
     }, [toReplyData])
 
@@ -64,10 +65,20 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
 
         if(toReplyData) {
             comment.parent = toReplyData.commentId
+            sendNotification({
+                user: toReplyData.user.id,
+                post: post.id,
+                comment: toReplyData.commentId,
+                message: `${user.username} ответил на ваш комметарий`
+            })
         }
 
         addComment(comment)
-
+        sendNotification({
+            user: post.user,
+            post: post.id,
+            message: `${user.username} оставил комментарий на ваш пост`
+        })
         setToReplyData(null)
         setValue('')
     }
@@ -77,10 +88,10 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
             <div className="container">
                 <Header />
                 <div className="post-container">
-                    {isPostsLoading ? <Loader /> : <Post {...post} authUser={user}/>}
+                    {isPostsLoading ? <Loader /> : <Post post={post} authUser={user}/>}
 
                     <h2 className="comments-title">Комментарии</h2>
-                    {toReplyData && <p style={{marginBottom: '10px'}}>Ответ {toReplyData.username}</p>}
+                    {toReplyData && <p style={{marginBottom: '10px'}}>Ответ {toReplyData.user.username}</p>}
                     {isAuth &&
                     <form className="comment-form" onSubmit={(e) => submitComment(e)}>
                         <textarea
@@ -94,7 +105,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
                     </form>
                     }
                     {isCommentsLoading && <Loader />}
-                    {newComments?.map(c => <Comment key={c.id} {...c} setToReplyData={setToReplyData}/>)}
+                    {newComments?.map(c => <Comment {...c} setToReplyData={setToReplyData}/>)}
                     {error && <div className="error_wrapper">{error}</div>}
                 </div>
             </div>
@@ -113,4 +124,4 @@ const mapStateToProps = (state) =>({
 })
 
 
-export default connect(mapStateToProps, {fetchPost, fetchComments, clearComments, addComment})(PostDetail)
+export default connect(mapStateToProps, {fetchPost, fetchComments, clearComments, addComment, sendNotification})(PostDetail)

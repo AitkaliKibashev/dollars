@@ -113,11 +113,13 @@ class GetReputationAPIView(APIView):
         return Response(status=status.HTTP_200_OK, data={"reputation": reputation})
 
 
-class GetPostsAPIView(APIView):
-    permission_classes = (permissions.AllowAny,)
+class PostsAPIView(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def get(self, request, page):
-        posts = Post.objects.all().order_by("-id")
+    def get(self, request):
+        page = request.GET.get('page', 1)
+        category = request.GET.get('category', 1)
+        posts = Post.objects.filter(category=category).order_by("-id")
         paginator = Paginator(posts, 6)
         page_num = request.GET.get('page', page)
         if int(page) > paginator.num_pages:
@@ -130,10 +132,6 @@ class GetPostsAPIView(APIView):
         }
         return Response(temp_data)
 
-
-class AddPostAPIView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-
     def post(self, request):
         serializer = PostSerializer(data=request.data)
 
@@ -141,6 +139,7 @@ class AddPostAPIView(APIView):
             serializer.save()
 
         return Response(serializer.data)
+
 
 
 class RatingAPIView(APIView):
@@ -228,3 +227,41 @@ class DeleteComment(APIView):
         comment.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CategoryAPIView(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+
+        return Response(serializer.data)
+
+
+class UserNotification(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def post(self, request, formate=None):
+        serializer = NotificationSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
+
+    def get(self, request):
+        user_id = request.GET.get('user_id', None)
+        notifications = Notification.objects.filter(user=user_id).order_by("-pk")[:5]
+        serializer = NotificationSerializer(notifications, many=True)
+
+        return Response(serializer.data)
+
+    def patch(self, request):
+        pk = request.GET.get('notification_id', None)
+        notification = Notification.objects.get(pk=pk)
+        serializer = NotificationSerializer(notification, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
+

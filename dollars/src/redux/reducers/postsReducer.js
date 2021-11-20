@@ -27,7 +27,7 @@ export const postsReducer = (state=initialState, action) => {
         case SET_POSTS:
             return {
                 ...state,
-                posts: [...state.posts, ...action.payload]
+                posts: [...state.posts.filter(p => p.category === action.category), ...action.payload]
             }
         case CLEAR_POSTS:
             return {
@@ -75,7 +75,7 @@ export const postsReducer = (state=initialState, action) => {
 }
 
 
-const setPostsAC = (payload) => ({type: SET_POSTS, payload})
+const setPostsAC = (payload, category) => ({type: SET_POSTS, payload, category})
 const addPostAC = (payload) => ({type: ADD_POST, payload})
 const addRatingToPostAC = (payload) => ({type: ADD_RATING_TO_POST, payload})
 const setErrorAC = (error) => ({type: SET_POSTS_ERROR, error})
@@ -85,10 +85,10 @@ const deletePostAC = (postId) => ({type: DELETE_POST, postId})
 const setPostAC = (payload) => ({type: SET_POST, payload})
 const setPageNumberAC = (pages) => ({type: SET_PAGES_NUMBER, pages})
 
-export const setPosts = (page) => async (dispatch) => {
+export const setPosts = (page, categoryId) => async (dispatch) => {
     try {
         dispatch(setIsLoadingAC(true))
-        const res = await postAPI.getPosts(page)
+        const res = await postAPI.getPosts(page, categoryId)
 
         const posts = []
         if(!res.data.error) {
@@ -101,13 +101,16 @@ export const setPosts = (page) => async (dispatch) => {
                 }
             }
             dispatch(setPageNumberAC(res.data.pages))
-            dispatch(setPostsAC(posts))
+            dispatch(setPostsAC(posts, categoryId))
             dispatch(setErrorAC(null))
+        } else {
+            clearPostsAC()
         }
 
         dispatch(setIsLoadingAC(false))
 
     } catch (e) {
+        dispatch(setIsLoadingAC(false))
         setErrorAC('Произшола ошибка')
         setTimeout(() => {
             dispatch(setErrorAC(''))
@@ -130,6 +133,7 @@ export const fetchPost = (postId) => async (dispatch) => {
         }
         dispatch(setIsLoadingAC(false))
     } catch (e) {
+        dispatch(setIsLoadingAC(false))
         setErrorAC('Произшола ошибка')
         setTimeout(() => {
             dispatch(setErrorAC(''))
@@ -147,10 +151,11 @@ export const addPost = (data) => async (dispatch) => {
         const {token} = JSON.parse(localStorage.getItem('auth'))
         const res = await postAPI.addPost(data, token)
 
-        dispatch(addPostAC({...res.data, ratings: []}))
+        dispatch(addPostAC({...res.data, ratings: [], commentsLength: 0}))
         dispatch(setErrorAC(null))
         dispatch(setIsLoadingAC(false))
     } catch (e) {
+        dispatch(setIsLoadingAC(false))
         dispatch(setErrorAC('Произшола ошибка при добавлении поста'))
         setTimeout(() => {
             dispatch(setErrorAC(''))
@@ -199,4 +204,11 @@ export const addRatingToPost = (data) => async (dispatch) => {
             dispatch(setErrorAC(''))
         }, 5000)
     }
+}
+
+export const setError = (error) => (dispatch) => {
+    dispatch(setErrorAC(error))
+    setTimeout(() => {
+        dispatch(setErrorAC(''))
+    }, 5000)
 }

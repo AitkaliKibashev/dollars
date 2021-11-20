@@ -3,16 +3,16 @@ import React, {
     useRef,
     useState
 } from 'react'
-import Header from "../components/Header/Header"
+import Header from "../../components/Header/Header"
 import './Home.css'
 import {connect} from "react-redux"
 import Pusher from "pusher-js"
 import {
     initializeMessages,
     setMessage,
-} from "../redux/reducers/messagesReducer"
-import {chatAPI} from "../API/API"
-import Loader from "../components/Loader/Loader"
+} from "../../redux/reducers/messagesReducer"
+import {chatAPI} from "../../API/API"
+import Loader from "../../components/Loader/Loader"
 
 const Home = ({messages, setMessage, isAuth, user, initializeMessages}) => {
 

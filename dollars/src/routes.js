@@ -1,7 +1,7 @@
-import Home from "./pages/Home"
-import Index from "./pages/Index"
-import Login from "./pages/Login"
-import About from "./pages/About"
+import Home from "./pages/Home/Home"
+import Index from "./pages/Index/Index"
+import Login from "./pages/Login/Login"
+import About from "./pages/About/About"
 import Posts from "./pages/Posts/Posts"
 import PostDetail from "./pages/Posts/PostDetail"
 

@@ -4,11 +4,18 @@ import dollarsLogo from '../../assets/images/dollars_logo.jpg'
 import {NavLink} from "react-router-dom"
 import {connect} from "react-redux"
 import {fetchUserReputation} from "../../redux/reducers/authReducer"
+import Notification
+    from "../Notification/Notification"
+import {fetchNotifications} from "../../redux/reducers/notificationReducer"
 
-const Header = ({isAuth, user, fetchUserReputation}) => {
+const Header = ({isAuth, user, fetchUserReputation, fetchNotifications}) => {
 
     useEffect(() => {
-        if(isAuth) fetchUserReputation(user.id)
+        if(isAuth) {
+            fetchUserReputation(user.id)
+            fetchNotifications(user.id)
+        }
+
     }, [isAuth])
 
     return (
@@ -39,6 +46,7 @@ const Header = ({isAuth, user, fetchUserReputation}) => {
                         </NavLink>}
                 </li>
             </ul>
+            {isAuth &&  <Notification />}
             {isAuth &&
                 <div className="reputation-wrapper">
                     <div className="reputaion">
@@ -52,7 +60,7 @@ const Header = ({isAuth, user, fetchUserReputation}) => {
 
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
-    user: state.auth.user
+    user: state.auth.user,
 })
 
-export default connect(mapStateToProps, {fetchUserReputation})(Header)
+export default connect(mapStateToProps, {fetchUserReputation, fetchNotifications})(Header)

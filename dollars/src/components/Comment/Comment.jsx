@@ -9,7 +9,7 @@ const Comment = ({id, user, text, created_date, authUser, deleteComment, setToRe
     const createdDate = new Date(created_date)
 
     return (
-        <div className='comment-wrapper'>
+        <div className='comment-wrapper' id={id}>
             <div className="comment-header">
                 <p className="comment-author">
                     {user.username} <span>{createdDate.toLocaleString()}</span>
@@ -20,7 +20,7 @@ const Comment = ({id, user, text, created_date, authUser, deleteComment, setToRe
                 {text}
             </div>
             <div className="comment_footer">
-                {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, username: user.username})}>Ответить</button>}
+                {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, user: user})}>Ответить</button>}
             </div>
 
             {children?.map(child =>
@@ -35,7 +35,7 @@ const Comment = ({id, user, text, created_date, authUser, deleteComment, setToRe
                     {child.text}
                 </div>
                 <div className="comment_footer">
-                    {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, username: child.user.username})}>Ответить</button>}
+                    {authUser && <button className="reply-btn" onClick={() => setToReplyData({commentId: id, user: child.user})}>Ответить</button>}
                 </div>
             </div>
             )}

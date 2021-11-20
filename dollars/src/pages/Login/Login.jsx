@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
-import Header from "../components/Header/Header"
+import Header from "../../components/Header/Header"
 import './Login.css'
 import {connect} from "react-redux"
 import EmailInput
-    from "../components/common/EmailInput"
+    from "../../components/common/EmailInput"
 import LoginInput
-    from "../components/common/LoginInput"
+    from "../../components/common/LoginInput"
 import PasswordInput
-    from "../components/common/PasswordInput"
+    from "../../components/common/PasswordInput"
 import {
     loginUser,
     registerUser
-} from "../redux/reducers/authReducer"
+} from "../../redux/reducers/authReducer"
 import { useHistory } from 'react-router-dom'
 
 const Login = ({loginError, loginUser, registerUser}) => {
