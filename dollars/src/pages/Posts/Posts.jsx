@@ -27,7 +27,7 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
     const [value, setValue] = useState('')
     const [img, setImg] = useState(null)
     const [page, setPage] = useState(1)
-    const [categoryId, setCategoryId] = useState(1)
+    const [categoryId, setCategoryId] = useState(categories[0].id)
     const postsEndRef = useRef(null)
     const observer = useRef(null)
 
