@@ -25,7 +25,7 @@ const Login = ({loginError, loginUser, registerUser}) => {
         else setWindow('login')
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const login = e.target[0].value
@@ -38,14 +38,14 @@ const Login = ({loginError, loginUser, registerUser}) => {
         }
 
         if (window === 'login') {
-            const res = loginUser(data)
+            const res = await loginUser(data)
 
             if(res) {
                 setIsSubmit(true)
                 history.push('/home')
             }
         } else {
-            const res = registerUser({
+            const res = await registerUser({
                 ...data,
                 email: email
             })

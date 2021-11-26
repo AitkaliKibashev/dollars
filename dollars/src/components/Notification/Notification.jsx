@@ -1,4 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {
+    useEffect,
+    useRef,
+    useState
+} from 'react'
 import notificationIcon
     from "../../assets/images/notification-bell.png"
 import './Notification.css'
@@ -31,7 +35,7 @@ const Notification = ({notifications, updateNotification}) => {
         <div className={isActive ? 'notification-wrapper active' : 'notification-wrapper'}>
             <div className="notifications">
                 <div className="close" onClick={() => setIsActive(false)} />
-                {!notifications && <p>Уведомлений нет</p>}
+                {!notifications.length && <p>Новых уведомлений нет</p>}
                 {notifications.map(n =>
                     <div className="notification">
                         <NavLink to={n.comment ? `/post/${n.post}#${n.comment}` : `/post/${n.post}/`}>

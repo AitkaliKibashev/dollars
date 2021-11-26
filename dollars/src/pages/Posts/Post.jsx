@@ -33,7 +33,7 @@ const Post = ({post, addRatingToPost, authUser, addReputation, deletePost, sendN
             sendNotification({
                 user: user,
                 post: id,
-                message: `${authUser.username} поставил на ваш пост +${rate}`
+                message: `${authUser.username} оценил ваш пост на +${rate}`
             })
         }
     }

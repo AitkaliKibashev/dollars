@@ -250,7 +250,7 @@ class UserNotification(APIView):
 
     def get(self, request):
         user_id = request.GET.get('user_id', None)
-        notifications = Notification.objects.filter(user=user_id).order_by("-pk")[:5]
+        notifications = Notification.objects.filter(user=user_id, watched=False).order_by("-pk")
         serializer = NotificationSerializer(notifications, many=True)
 
         return Response(serializer.data)

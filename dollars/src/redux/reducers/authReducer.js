@@ -76,7 +76,6 @@ export const loginUser = (data) => async (dispatch) => {
             dispatch(toggleIsAuthAC(true))
             dispatch(setUserAC(res.data.user))
             dispatch(setErrorAC(null))
-
             return true
         }
 
@@ -148,7 +147,6 @@ export const addReputation = (data) => async (dispatch) => {
             dispatch(setErrorAC(null))
         }
     } catch (e) {
-        console.log(e)
         dispatch(setErrorAC('Произошла ошибка при добавлении репутации'))
     }
 
@@ -165,5 +163,4 @@ export const fetchUserReputation = (userId) => async (dispatch) => {
     } catch (e) {
         console.log(e)
     }
-
 }

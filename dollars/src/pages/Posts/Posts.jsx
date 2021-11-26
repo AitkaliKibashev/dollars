@@ -33,6 +33,10 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
 
     useEffect(() => {
         fetchCategories()
+        return () => {
+            clearPosts()
+            clearCategories()
+        }
     }, [])
 
     useEffect(() => {
@@ -42,11 +46,6 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
     useEffect(() => {
         setPosts(page, categoryId)
     }, [page, categoryId])
-
-    useEffect(() => () => {
-        clearPosts()
-        clearCategories()
-    }, [])
 
     useEffect(() => {
         if(isLoading) return
@@ -60,8 +59,6 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
         observer.current = new IntersectionObserver(callback)
         observer.current.observe(postsEndRef.current)
     }, [isLoading])
-
-
 
     const handleTextarea = (e) => {
         e.target.style.height = e.target.scrollHeight + 'px'
@@ -84,18 +81,15 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
 
         const formData = new FormData()
 
+        formData.append('user', user.id)
+        formData.append('username', user.username)
+        formData.append('text', value)
+        formData.append('category', categoryId)
+
         if(img) {
             formData.append('image', img, img.name)
-            formData.append('user', user.id)
-            formData.append('username', user.username)
-            formData.append('text', value)
-            formData.append('category', categoryId)
-        } else {
-            formData.append('user', user.id)
-            formData.append('username', user.username)
-            formData.append('text', value)
-            formData.append('category', categoryId)
         }
+
         addPost(formData)
         setValue('')
         setImg(null)
@@ -114,7 +108,7 @@ const Posts = ({posts, error, setPosts, addPost, user, clearPosts, isLoading, is
                 <div className="feed_container">
                     <div className="category_container">
                         {categories.map(c =>
-                            <Category title={c.title} id={c.id} onClick={changeCategory}/>
+                            <Category title={c.title} id={c.id} onClick={changeCategory} categoryId={categoryId}/>
                         )}
 
                     </div>

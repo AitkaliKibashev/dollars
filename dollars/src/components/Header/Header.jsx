@@ -3,12 +3,17 @@ import './Header.css'
 import dollarsLogo from '../../assets/images/dollars_logo.jpg'
 import {NavLink} from "react-router-dom"
 import {connect} from "react-redux"
-import {fetchUserReputation} from "../../redux/reducers/authReducer"
+import {
+    fetchUserReputation,
+    logoutUser
+} from "../../redux/reducers/authReducer"
 import Notification
     from "../Notification/Notification"
 import {fetchNotifications} from "../../redux/reducers/notificationReducer"
+import Reputation from "../Reputation/Reputation"
+import Logout from "../Logout/Logout"
 
-const Header = ({isAuth, user, fetchUserReputation, fetchNotifications}) => {
+const Header = ({isAuth, user, fetchUserReputation, fetchNotifications, logoutUser}) => {
 
     useEffect(() => {
         if(isAuth) {
@@ -46,14 +51,11 @@ const Header = ({isAuth, user, fetchUserReputation, fetchNotifications}) => {
                         </NavLink>}
                 </li>
             </ul>
-            {isAuth &&  <Notification />}
-            {isAuth &&
-                <div className="reputation-wrapper">
-                    <div className="reputaion">
-                        {user.reputation}
-                    </div>
-                </div>
-            }
+            {isAuth && <>
+                <Logout onClick={logoutUser}/>
+                <Notification />
+                <Reputation reputation={user.reputation} />
+            </>}
         </header>
     )
 }
@@ -63,4 +65,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
 })
 
-export default connect(mapStateToProps, {fetchUserReputation, fetchNotifications})(Header)
+export default connect(mapStateToProps, {fetchUserReputation, fetchNotifications, logoutUser})(Header)

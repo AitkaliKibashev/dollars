@@ -5,7 +5,17 @@
 
     border-radius: 8px;
     border: 2px solid white;
+    transition: all 0.2s linear;
 }
+
+.category:hover,
+.category.active {
+    border: 2px solid black;
+    background: white;
+    color: black;
+}
+
+
 
 @media(max-width: 768px) {
     .category {
