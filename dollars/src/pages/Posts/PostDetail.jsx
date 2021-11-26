@@ -23,7 +23,7 @@ const PostDetail = ({fetchPost, post, user, fetchComments, comments, clearCommen
     const [toReplyData, setToReplyData] = useState(null)
     const primaryComments = comments.filter(c => !c.parent)
     const newComments = primaryComments.map(nc => {
-        return {...nc, children: comments.filter(c => c.parent === nc.id)}
+        return {...nc, children: comments.reverse().filter(c => c.parent === nc.id)}
     })
 
     useEffect(() => {
