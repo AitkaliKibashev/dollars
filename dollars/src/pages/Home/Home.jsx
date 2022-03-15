@@ -69,9 +69,6 @@ const Home = ({messages, setMessage, isAuth, user, initializeMessages}) => {
         <main className="main">
             <div className="container">
                 <Header />
-                <div className="welcome">
-                    <h1>Главная страница закрытого общества Dollars Атырау - главное коммуникационное место.</h1>
-                </div>
                 <h2 className="chat-title">Main Board</h2>
                 <div className="main-board" >
                     {messages.map(m =>

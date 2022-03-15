@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login"
 import About from "./pages/About/About"
 import Posts from "./pages/Posts/Posts"
 import PostDetail from "./pages/Posts/PostDetail"
+import Members from "./pages/Members/Members"
 
 const INDEX_ROUTE = '/'
 const HOME_ROUTE = '/home'
@@ -11,6 +12,7 @@ const LOGIN_ROUTE = '/login'
 const ABOUT_ROUTE = '/about'
 const POSTS_ROUTE = '/posts'
 const POST_DETAIL_ROUTE = '/post/:id'
+const MEMBERS_ROUTE = '/members'
 
 export const publicRoutes = [
     {
@@ -40,5 +42,9 @@ export const privateRoutes = [
     {
         path: POST_DETAIL_ROUTE,
         Component: PostDetail
+    },
+    {
+        path: MEMBERS_ROUTE,
+        Component: Members
     }
 ]

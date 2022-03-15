@@ -45,6 +45,11 @@ const Header = ({isAuth, user, fetchUserReputation, fetchNotifications, logoutUs
                     </NavLink>
                 </li>
                 <li className="nav-link" >
+                    <NavLink to='/members'>
+                        Members
+                    </NavLink>
+                </li>
+                <li className="nav-link" >
                     {isAuth ? user.username:
                         <NavLink to='/login'>
                             Login
