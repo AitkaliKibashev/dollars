@@ -9,5 +9,5 @@
 1. Frontend: react, redux, axios
 2. Backend: django, django rest framework
 
-## Проект: dollars-secret-chat.herokuapp.com
-## Пароль: babbooka
+[Проект](https://dollars-secret-chat.herokuapp.com)
+### Пароль: babbooka
